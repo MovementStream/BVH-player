@@ -12,9 +12,8 @@
       var hash = window.location.hash.replace("#","");
       var args = hash.split(",")
       var fbxfile = args[0] || "xbot.fbx"
-      var zoomLevel = args[1] || null;
-      var bvhfile = "blank.bvh"
-			let camera, scene, renderer, stats;
+      var bvhfile = args[1] || "bvh/ri-redo.bvh"
+      var zoomLevel = args[2] || null;
       if(zoomLevel){
         zoomLevel = parseFloat(zoomLevel);
       }
@@ -26,7 +25,6 @@
       function animationReset(){
         animation.time=0;mixer_bvh.time=0;animation.paused=false;
       }
-        var clock_bvh;
     </script>
 
 		<script type="module">
@@ -39,9 +37,10 @@
 			import { FBXLoader } from './jsm/loaders/FBXLoader.js';
 			import { BVHLoader } from './jsm/loaders/BVHLoader.js';
 
-			clock_bvh = new THREE.Clock();
+			const clock_bvh = new THREE.Clock();
 
 
+			let camera, scene, renderer, stats;
 
 			const clock = new THREE.Clock();
 
@@ -57,11 +56,9 @@
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.set( -300, 100, -500 );
-				//camera.position.set( 0, 100, -300 );
-        camera.rotation.y = 90 * Math.PI / 180
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0xffffff );
+				scene.background = new THREE.Color( 0xa0a0a0 );
 	//			scene.fog = new THREE.Fog( 0xa0a0a0, 200, 1000 );
 
 				const hemiLight = new THREE.HemisphereLight( 0xffffff,0xffffff );
@@ -70,10 +67,14 @@
 
 				const dirLight = new THREE.DirectionalLight( 0xffffff );
 				dirLight.position.set( 0, 200, 100 );
-				dirLight.castShadow = false;
+				dirLight.castShadow = true;
+				dirLight.shadow.camera.top = 180;
+				dirLight.shadow.camera.bottom = - 100;
+				dirLight.shadow.camera.left = - 120;
+				dirLight.shadow.camera.right = 120;
 				scene.add( dirLight );
 
-				// scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
+			//	 scene.add( new THREE.CameraHelper( dirLight.shadow.camera ) );
 
 				// ground
 				const mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
@@ -82,9 +83,9 @@
 				scene.add( mesh );
 
 				const grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
-				grid.material.opacity = 0.4;
+				grid.material.opacity = 0.2;
 				grid.material.transparent = true;
-				scene.add( grid );
+	//			scene.add( grid );
 
 				// model
 				const loader = new FBXLoader();
@@ -121,9 +122,10 @@
             init_bvh();
             animate_bvh();
           const loader_bvh = new BVHLoader();
-         loader_bvh.load( bvhfile, function ( result ) {
+        //  loader_bvh.load( "models/bvh/Ri_BVH-3-standing.bvh", function ( result ) {
+         loader_bvh.load(  bvhfile, function ( result ) {
 
-            console.log(result)
+            //console.log(result)
             animationDuration = result.clip.duration
 
             skeletonHelper_bvh = new THREE.SkeletonHelper( result.skeleton.bones[ 0 ] );
@@ -142,7 +144,7 @@
        // animation.setLoop(THREE.LoopOnce, 0);
 
 
-           // animation.play()
+            animation.play()
 
 
           } );
@@ -159,7 +161,7 @@
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.target.set( 0, 100, 0 );
-        controls.enableZoom = true;
+        controls.enableZoom = false;
 
 				controls.update();
 
@@ -167,7 +169,7 @@
 
 				// stats
 				stats = new Stats();
-			//	container.appendChild( stats.dom );
+				container.appendChild( stats.dom );
 
 			}
 
@@ -213,16 +215,14 @@
 
 				const delta = clock_bvh.getDelta();
 
-        /*
         if ( mixer_bvh ){
          mixer_bvh.update( delta );
-         //console.log(mixer_bvh.time);
+        // console.log(mixer_bvh.time);
          if(mixer_bvh.time>=animationDuration){
             animation.paused=true;
             animation.time=animationDuration;
          }
         }
-        */
 
     scene_bvh.traverse(function (child) {
        if(child.type === "Bone"){
@@ -352,7 +352,5 @@ function dothistoInit()
 
 		</script>
 
-        <input type="url" placeholder="ws://localhost:3000" id="url" value="ws://localhost:3000" 
-            style="position: fixed; top: 0; left: 0; width: 100%; height: 40px; text-align:center; z-index: 1000;" onchange='startWebSocket()'>
 	</body>
 </html>
