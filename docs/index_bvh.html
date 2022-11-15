@@ -12,7 +12,7 @@
       var hash = window.location.hash.replace("#","");
       var args = hash.split(",")
       var fbxfile = args[0] || "xbot.fbx"
-      var bvhfile = args[1] || "bvh/ri-redo.bvh"
+      var bvhfile = args[1] || "bvh/test.bvh"
       var zoomLevel = args[2] || null;
       if(zoomLevel){
         zoomLevel = parseFloat(zoomLevel);
@@ -83,7 +83,7 @@
 				scene.add( mesh );
 
 				const grid = new THREE.GridHelper( 2000, 20, 0x000000, 0x000000 );
-				grid.material.opacity = 1
+				grid.material.opacity = 0.2;
 				grid.material.transparent = false;
 				scene.add( grid );
 
@@ -160,7 +160,7 @@
 
 				const controls = new OrbitControls( camera, renderer.domElement );
 				controls.target.set( 0, 100, 0 );
-        controls.enableZoom = false;
+        controls.enableZoom = true;
 
 				controls.update();
 
@@ -168,7 +168,7 @@
 
 				// stats
 				stats = new Stats();
-				container.appendChild( stats.dom );
+			//	container.appendChild( stats.dom );
 
 			}
 
