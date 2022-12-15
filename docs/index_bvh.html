@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>BVH Player</title>
+    <title>Miver Player</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -21,9 +21,10 @@
         zoomLevel = parseFloat(zoomLevel);
       }
       var model;
-    var grid;
+      var grid;
       var animation;
       var animationDuration;
+      var controls;
       let camera_bvh, controls_bvh, scene_bvh, renderer_bvh;
       let mixer_bvh, skeletonHelper_bvh;
       function animationReset() {
@@ -35,7 +36,7 @@
     <base href="." />
 
     <script type="module">
-        /*
+      /*
       import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
       import Stats from "https://unpkg.com/three/examples/jsm/libs/stats.module.js";
       import { OrbitControls } from "https://unpkg.com/three@0.124.0/examples/jsm/controls/OrbitControls.js";
@@ -511,14 +512,27 @@
 
         grid = new InfiniteGridHelper(10, 100, 0x000000, 100000);
         const color = {
-  value: 0xffffff
-};
+          value: 0xffffff,
+        };
 
-
-        gui.add(grid.material.uniforms.uSize1, "value", 2, 100).step(1).name("Size 1");
-gui.add(grid.material.uniforms.uSize2, "value", 2, 1000).step(1).name("Size 2");
-gui.add(grid.material.uniforms.uDistance, "value", 100, 10000).step(1).name("Distance");
-gui.addColor(color, "value").name("Color").onChange( function() { grid.material.uniforms.uColor.value.set( color.value ); } );;
+        gui
+          .add(grid.material.uniforms.uSize1, "value", 2, 100)
+          .step(1)
+          .name("Size 1");
+        gui
+          .add(grid.material.uniforms.uSize2, "value", 2, 1000)
+          .step(1)
+          .name("Size 2");
+        gui
+          .add(grid.material.uniforms.uDistance, "value", 100, 10000)
+          .step(1)
+          .name("Distance");
+        gui
+          .addColor(color, "value")
+          .name("Color")
+          .onChange(function () {
+            grid.material.uniforms.uColor.value.set(color.value);
+          });
         scene.add(grid);
         var sky = new Sky();
         sky.scale.setScalar(450000);
@@ -604,8 +618,8 @@ gui.addColor(color, "value").name("Color").onChange( function() { grid.material.
         renderer.shadowMap.enabled = true;
         container.appendChild(renderer.domElement);
 
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.target.set(0, 100, 0);
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 0, 100);
         controls.enableZoom = true;
 
         controls.update();
@@ -638,10 +652,10 @@ gui.addColor(color, "value").name("Color").onChange( function() { grid.material.
         //stats.update();
       }
 
-var count = 0;
+      var count = 0;
 
       function animate_bvh() {
-        count++
+        count++;
         requestAnimationFrame(animate_bvh);
 
         const delta = clock_bvh.getDelta();
@@ -655,102 +669,101 @@ var count = 0;
           }
         }
 
-        if(count % 4 == 0){
-        scene_bvh.traverse(function (child) {
-          if (child.type === "Bone") {
-            if (child.name === "LeftArm") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftArm");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftForeArm") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftForeArm");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftHand") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftHand");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftUpLeg") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftUpLeg");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftLeg") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftLeg");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftFoot") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftFoot");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftShoulder") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftShoulder");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "LeftToeBase") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigLeftToeBase");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightForeArm") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightForeArm");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightArm") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightArm");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightHand") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightHand");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightUpLeg") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightUpLeg");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightLeg") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightLeg");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightFoot") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightFoot");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightShoulder") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightShoulder");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "RightToeBase") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigRightToeBase");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "Hips") {
-              var q = child.quaternion;
-              var p = child.position;
-              var bn = model.getObjectByName("mixamorigHips");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-              if(fbxfile == "ybot.fbx"){
-                bn.position.set(p.x, p.y+13, p.z);
+        if (count % 4 == 0) {
+          scene_bvh.traverse(function (child) {
+            if (child.type === "Bone") {
+              if (child.name === "LeftArm") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftArm");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftForeArm") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftForeArm");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftHand") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftHand");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftUpLeg") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftUpLeg");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftLeg") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftLeg");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftFoot") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftFoot");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftShoulder") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftShoulder");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "LeftToeBase") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigLeftToeBase");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightForeArm") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightForeArm");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightArm") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightArm");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightHand") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightHand");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightUpLeg") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightUpLeg");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightLeg") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightLeg");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightFoot") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightFoot");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightShoulder") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightShoulder");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "RightToeBase") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigRightToeBase");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "Hips") {
+                var q = child.quaternion;
+                var p = child.position;
+                var bn = model.getObjectByName("mixamorigHips");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+                if (fbxfile == "ybot.fbx") {
+                  bn.position.set(p.x, p.y + 13, p.z);
+                } else {
+                  bn.position.set(p.x, p.y + 20, p.z);
+                }
+              } else if (child.name === "Head") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigHead");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "Neck") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigNeck");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else if (child.name === "Spine") {
+                var q = child.quaternion;
+                var bn = model.getObjectByName("mixamorigSpine");
+                bn.quaternion.set(q.x, q.y, q.z, q.w);
+              } else {
+                // console.log(child);
               }
-              else{
-                bn.position.set(p.x, p.y+20, p.z);
-              }
-            } else if (child.name === "Head") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigHead");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "Neck") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigNeck");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else if (child.name === "Spine") {
-              var q = child.quaternion;
-              var bn = model.getObjectByName("mixamorigSpine");
-              bn.quaternion.set(q.x, q.y, q.z, q.w);
-            } else {
-              // console.log(child);
+              renderer.render(scene, camera);
             }
-            renderer.render(scene, camera);
-          }
-        });
+          });
         }
       }
 
