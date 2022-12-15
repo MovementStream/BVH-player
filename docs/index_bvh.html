@@ -491,7 +491,7 @@
           1,
           2000
         );
-        camera.position.set(300, 10, -500);
+        camera.position.set(10, 90, 800);
 
         scene = new THREE.Scene();
 
@@ -510,7 +510,7 @@
 
         // Grid
 
-        grid = new InfiniteGridHelper(10, 100, 0x000000, 100000);
+        grid = new InfiniteGridHelper(50, 50, 0x000000, 100000);
         const color = {
           value: 0xffffff,
         };
@@ -518,18 +518,18 @@
         gui
           .add(grid.material.uniforms.uSize1, "value", 2, 100)
           .step(1)
-          .name("Size 1");
+          .name("Floor Size 1");
         gui
           .add(grid.material.uniforms.uSize2, "value", 2, 1000)
           .step(1)
-          .name("Size 2");
+          .name("Floor Size 2");
         gui
           .add(grid.material.uniforms.uDistance, "value", 100, 10000)
           .step(1)
-          .name("Distance");
+          .name("Floor Distance");
         gui
           .addColor(color, "value")
-          .name("Color")
+          .name("Grid Lines")
           .onChange(function () {
             grid.material.uniforms.uColor.value.set(color.value);
           });
