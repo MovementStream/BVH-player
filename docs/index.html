@@ -7,7 +7,11 @@
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
-    <link type="text/css" rel="stylesheet" href="main.css" />
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
+    <link type="text/css" rel="stylesheet" href="css/rangeslider.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="js/rangeslider.js"></script>
+
   </head>
 
   <body>
@@ -512,13 +516,13 @@
 
         grid = new InfiniteGridHelper(50, 50, 0x000000, 100000);
         const color = {
-          value: 0xffffff
+          value: 0xffffff,
         };
         const color1 = {
-          value: 0xffffff
+          value: 0xffffff,
         };
         const color2 = {
-          value: 0xffffff
+          value: 0xffffff,
         };
 
         gui
@@ -533,13 +537,13 @@
           .add(grid.material.uniforms.uDistance, "value", 100, 10000)
           .step(1)
           .name("Floor Distance");
-         gui
+        gui
           .addColor(color, "value")
           .name("Grid Lines")
           .onChange(function () {
             grid.material.uniforms.uColor.value.set(color.value);
           });
-         gui
+        gui
           .addColor(color1, "value")
           .name("Joints")
           .onChange(function () {
@@ -583,7 +587,6 @@
 
           mixer = new THREE.AnimationMixer(object);
 
-          /*
 					object.traverse( function ( child ) {
 						if ( child.isMesh ) {
 
@@ -592,7 +595,6 @@
 
 						}
 					} );
-*/
 
           scene.add(object);
 
@@ -601,6 +603,7 @@
       console.log(child);
     });
 */
+          $('#seek').rangeslider({    polyfill: false})
           scene_bvh = new THREE.Scene();
           animate_bvh();
           const loader_bvh = new BVHLoader();
@@ -646,7 +649,7 @@
 
         // stats
         stats = new Stats();
-        //	container.appendChild( stats.dom );
+        container.appendChild(stats.dom);
       }
 
       function onWindowResize() {
@@ -666,8 +669,6 @@
         //			if ( mixer ) mixer.update( delta );
 
         renderer.render(scene, camera);
-
-        //stats.update();
       }
 
       var count = 0;
@@ -688,6 +689,7 @@
         }
 
         if (count % 4 == 0) {
+          stats.update();
           scene_bvh.traverse(function (child) {
             if (child.type === "Bone") {
               if (child.name === "LeftArm") {
@@ -790,5 +792,12 @@
         rightArm.quaternion.set(0, 0, 0, 1);
       }
     </script>
+  <a  onclick='playPause()' class="btn-floating btn-large waves-effect waves-light blue" id='playPause' style='position:fixed;left:30px;bottom:15px'><i class="material-icons">play_arrow</i></a>
+
+    <input id="seek" type="range" min="0" max="100" value="0" step="1" onchange="seek(this.value)" 
+        style="position: fixed; bottom: 0; left: 100px; width: calc(100vw - 200px); height: 50px; opacity: 1; z-index: 1000;">
   </body>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </html>
