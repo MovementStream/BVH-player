@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="css/rangeslider.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/rangeslider.js"></script>
+    <script src="js/BVH.js"></script>
   </head>
 
   <body>
@@ -19,7 +20,10 @@
       var hash = window.location.hash.replace("#", "");
       var args = hash.split(",");
       var fbxfile = args[0] || "xbot.fbx";
-      var bvhfile = args[1] || "bvh/test.bvh";
+      // var bvhfile = args[1] || "bvh/test.bvh";
+      var bvhfile =
+        args[1] ||
+        "https://cdn.jsdelivr.net/gh/miver-player/bvh-files@latest/01/01_01.bvh";
       var zoomLevel = args[2] || null;
       if (zoomLevel) {
         zoomLevel = parseFloat(zoomLevel);
@@ -31,15 +35,15 @@
       var controls;
       let camera_bvh, controls_bvh, scene_bvh, renderer_bvh;
       let mixer_bvh, skeletonHelper_bvh;
-        var seekSem = false;
+      var seekSem = false;
       function seekTime(v) {
-                  if(seekSem) {
-                              seekSem = false;
-                        return;
-                    }
+        if (seekSem) {
+          seekSem = false;
+          return;
+        }
         animation.time = (v * animationDuration) / 100;
-      //  mixer_bvh.time = (v * animationDuration) / 100;
-       // animation.paused = false;
+        //  mixer_bvh.time = (v * animationDuration) / 100;
+        // animation.paused = false;
       }
       function animationReset() {
         animation.time = 0;
@@ -613,7 +617,7 @@
 */
           $("#seek").rangeslider({
             onSlideEnd: function (position, value) {
-                      //        seekSem = true;
+              //        seekSem = true;
               console.log(position, value);
               seekTime(value);
             },
@@ -708,6 +712,7 @@
         if (count % 4 == 0) {
           stats.update();
           scene_bvh.traverse(function (child) {
+            // console.log(child);
             if (child.type === "Bone") {
               if (child.name === "LeftArm") {
                 var q = child.quaternion;
