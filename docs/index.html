@@ -12,8 +12,6 @@
     <link type="text/css" rel="stylesheet" href="css/rangeslider.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/rangeslider.js"></script>
-
-    <script src="js/BVH.js"></script>
   </head>
 
   <body>
@@ -714,8 +712,10 @@
           stats.update();
           scene_bvh.traverse(function (child) {
             // console.log(child);
+            child.name = transposeName(child.name);
             if (child.type === "Bone") {
               if (child.name === "LeftArm") {
+                console.log(child.quaternion);
                 var q = child.quaternion;
                 var bn = model.getObjectByName("mixamorigLeftArm");
                 bn.quaternion.set(q.x, q.y, q.z, q.w);
@@ -814,6 +814,53 @@
         rightArm = model.getObjectByName("mixamorigRightArm");
         rightArm.quaternion.set(0, 0, 0, 1);
       }
+
+      function transposeName(name){
+		if(name==="hip") name = "Hips";
+		if(name==="abdomen") name = "Spine1";
+		if(name==="chest") name = "Chest";
+		if(name==="neck") name = "Neck";
+		if(name==="head") name = "Head";
+		if(name==="lCollar") name = "LeftCollar";
+		if(name==="rCollar") name = "RightCollar";
+		if(name==="lShldr") name = "LeftArm";
+		if(name==="rShldr") name = "RightArm";
+		if(name==="lForeArm") name = "LeftForeArm";
+		if(name==="rForeArm") name = "RightForeArm";
+		if(name==="lHand") name = "LeftHand";
+		if(name==="rHand") name = "RightHand";
+		if(name==="lFoot") name = "LeftFoot";
+		if(name==="rFoot") name = "RightFoot";
+		if(name==="lThigh") name = "LeftUpLeg";
+		if(name==="rThigh") name = "RightUpLeg";
+		if(name==="lShin") name = "RightLeg";
+		if(name==="rShin") name = "LeftLeg";
+
+		// leg
+		if(name==="RightHip") name = "RightUpLeg";
+		if(name==="LeftHip") name = "LeftUpLeg";
+		if(name==="RightKnee") name = "RightLeg";
+		if(name==="LeftKnee") name = "LeftLeg";
+		if(name==="RightAnkle") name = "RightFoot";
+		if(name==="LeftAnkle") name = "LeftFoot";
+		// arm
+		if(name==="RightShoulder") name = "RightArm";
+		if(name==="LeftShoulder") name = "LeftArm";
+		if(name==="RightElbow") name = "RightForeArm";
+		if(name==="LeftElbow") name = "LeftForeArm";
+		if(name==="RightWrist") name = "RightHand";
+		if(name==="LeftWrist") name = "LeftHand";
+
+		if(name==="rcollar") name = "RightCollar";
+		if(name==="lcollar") name = "LeftCollar";
+
+		if(name==="rtoes") name = "RightToe";
+		if(name==="ltoes") name = "LeftToe";
+
+		if(name==="upperback") name = "Spine1";
+		
+		return name;
+	}
     </script>
     <a
       onclick="playPause()"
