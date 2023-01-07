@@ -22,7 +22,7 @@
       // var bvhfile = args[1] || "bvh/test.bvh";
       var bvhfile =
         args[1] ||
-        "https://cdn.jsdelivr.net/gh/miver-player/bvh-files@latest/01/01_01.bvh";
+        "https://cdn.jsdelivr.net/gh/miver-player/bvh-files@latest/02/02_09.bvh";
       var zoomLevel = args[2] || null;
       if (zoomLevel) {
         zoomLevel = parseFloat(zoomLevel);
@@ -35,14 +35,13 @@
       let camera_bvh, controls_bvh, scene_bvh, renderer_bvh;
       let mixer_bvh, skeletonHelper_bvh;
       var seekSem = false;
-      function seekTime(v) {
-        if (seekSem) {
-          seekSem = false;
-          return;
-        }
-        animation.time = (v * animationDuration) / 100;
-        //  mixer_bvh.time = (v * animationDuration) / 100;
-        // animation.paused = false;
+      function toggleSeek(e) {
+                   var rect = document.getElementById("seekbar").getBoundingClientRect();
+      var x = e.clientX - rect.left; //x position within the element.
+      var y = e.target.offsetWidth; // width of element
+         animation.time = (x * animationDuration) / y;
+          mixer_bvh.time = (x * animationDuration) / y;
+         animation.paused = false;
       }
       function animationReset() {
         animation.time = 0;
@@ -616,9 +615,6 @@
 */
           $("#seek").rangeslider({
             onSlideEnd: function (position, value) {
-              //        seekSem = true;
-              console.log(position, value);
-              seekTime(value);
             },
             polyfill: false,
           });
@@ -706,7 +702,6 @@
             animation.paused = true;
             animation.time = animationDuration;
           }
-        }
 
         if (count % 4 == 0) {
           stats.update();
@@ -715,7 +710,6 @@
             child.name = transposeName(child.name);
             if (child.type === "Bone") {
               if (child.name === "LeftArm") {
-                console.log(child.quaternion);
                 var q = child.quaternion;
                 var bn = model.getObjectByName("mixamorigLeftArm");
                 bn.quaternion.set(q.x, q.y, q.z, q.w);
@@ -808,6 +802,7 @@
             }
           });
         }
+        }
       }
 
       function dothistoInit() {
@@ -877,6 +872,18 @@
       ><i class="material-icons">videocam</i></a
     >
 
+      <div style="
+        position: fixed;
+        bottom: 0;
+        left: 100px;
+        width: calc(100vw - 200px);
+        height: 100px;
+        opacity: 1;
+        z-index: 1000;
+      "
+           id='seekbar'
+           onclick="toggleSeek(event)"
+          >
     <input
       id="seek"
       type="range"
@@ -884,16 +891,8 @@
       max="100"
       value="0"
       step="1"
-      style="
-        position: fixed;
-        bottom: 0;
-        left: 100px;
-        width: calc(100vw - 200px);
-        height: 50px;
-        opacity: 1;
-        z-index: 1000;
-      "
     />
+    </div>
   </body>
   <link
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
