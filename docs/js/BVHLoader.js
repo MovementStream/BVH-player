@@ -97,7 +97,8 @@ BVHLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			// number of frames
 
 			var tokens = nextLine( lines ).split( /[\s]+/ );
-			var numFrames = parseInt( tokens[ 1 ] );
+			numFrames = parseInt( tokens[ 1 ] );
+
 
 			if ( isNaN( numFrames ) ) {
 
@@ -108,7 +109,8 @@ BVHLoader.prototype = Object.assign( Object.create( Loader.prototype ), {
 			// frame time
 
 			tokens = nextLine( lines ).split( /[\s]+/ );
-			var frameTime = parseFloat( tokens[ 2 ] );
+			frameTime = parseFloat( tokens[ 2 ] );
+
 
 			if ( isNaN( frameTime ) ) {
 
