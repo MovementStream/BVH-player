@@ -40,7 +40,7 @@
       function toggleSeek(e) {
         var rect = document.getElementById("seekbar").getBoundingClientRect();
         var x = e.clientX - rect.left; //x position within the element.
-        var y = e.target.offsetWidth * 0.9; // width of element
+        var y = e.target.offsetWidth * 1.05; // width of element
         animation.time = (x * animationDuration) / y;
         mixer_bvh.time = (x * animationDuration) / y;
         animation.paused = false;
@@ -195,6 +195,8 @@
             const geometry = new THREE.PlaneBufferGeometry(2, 2, 1, 1);
 
             const material = new THREE.ShaderMaterial({
+              lights: true,
+              fog: true,
               side: THREE.DoubleSide,
 
               uniforms: {
@@ -211,7 +213,8 @@
                   value: distance,
                 },
               },
-              transparent: true,
+              transparent: false,
+              receiveShadow: true,
               vertexShader: `
            
            varying vec3 worldPosition;
@@ -569,6 +572,7 @@
           .onChange(function () {
             model.children[2].material.color.set(color2.value);
           });
+        grid.receiveShadow = true;
         scene.add(grid);
         var sky = new Sky();
         sky.scale.setScalar(450000);
