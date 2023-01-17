@@ -50,10 +50,26 @@
         mixer_bvh.time = 0;
         animation.paused = false;
       }
+
+    var inputFile = null;
     </script>
     <base href="." />
 
     <script type="module">
+        if ('launchQueue' in window && 'files' in LaunchParams.prototype) {
+  launchQueue.setConsumer((launchParams) => {
+    // Nothing to do when the queue is empty.
+    if (!launchParams.files.length) {
+      return;
+    }
+    for (const fileHandle of launchParams.files) {
+      // Handle the file.
+      inputFile = fileHandle;
+      console.log(fileHandle);
+    }
+  });
+}
+
       /*
       import * as THREE from "https://unpkg.com/three@0.124.0/build/three.module.js";
       import Stats from "https://unpkg.com/three/examples/jsm/libs/stats.module.js";
@@ -626,7 +642,8 @@
           scene_bvh = new THREE.Scene();
           animate_bvh();
           const loader_bvh = new BVHLoader();
-          loader_bvh.load(bvhfile, function (result) {
+          console.log(inputFile);
+          loader_bvh.load(inputFile || bvhfile, function (result) {
             //console.log(result)
             bvhObj = result;
             animationDuration = result.clip.duration;
