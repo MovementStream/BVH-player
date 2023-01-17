@@ -34,6 +34,7 @@ BVHLoader.prototype = Object.assign(Object.create(Loader.prototype), {
     loader.setPath(scope.path);
     loader.setRequestHeader(scope.requestHeader);
     loader.setWithCredentials(scope.withCredentials);
+      console.log(typeof url);
     loader.load(
       url,
       function (text) {
