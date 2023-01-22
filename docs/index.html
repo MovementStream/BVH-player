@@ -16,6 +16,7 @@
 
   <body>
     <script>
+var data45
       var hash = window.location.hash.replace("#", "");
       var args = hash.split(",");
       var fbxfile = args[0] || "xbot.fbx";
@@ -82,6 +83,7 @@
       import { OrbitControls } from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/OrbitControls.js";
       import { FBXLoader } from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/FBXLoader.js";
       import { BVHLoader } from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/BVHLoader.js";
+      //import { BVHLoader } from "./js/BVHLoader.js";
 
       import * as dat from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/dat.gui.js";
       const gui = new dat.GUI();
@@ -644,7 +646,7 @@
           const loader_bvh = new BVHLoader();
           console.log(inputFile);
           loader_bvh.load(inputFile || bvhfile, function (result) {
-            //console.log(result)
+            console.log(result)
             bvhObj = result;
             animationDuration = result.clip.duration;
 

@@ -29,30 +29,52 @@ BVHLoader.prototype = Object.assign(Object.create(Loader.prototype), {
 
   load: function (url, onLoad, onProgress, onError) {
     var scope = this;
-
     var loader = new FileLoader(scope.manager);
-    loader.setPath(scope.path);
-    loader.setRequestHeader(scope.requestHeader);
-    loader.setWithCredentials(scope.withCredentials);
-      console.log(typeof url);
-    loader.load(
-      url,
-      function (text) {
-        try {
-          onLoad(scope.parse(text));
-        } catch (e) {
-          if (onError) {
-            onError(e);
-          } else {
-            console.error(e);
-          }
+    if (typeof url === "string") {
+      loader.setPath(scope.path);
+      loader.setRequestHeader(scope.requestHeader);
+      loader.setWithCredentials(scope.withCredentials);
+      loader.load(
+        url,
+        function (text) {
+            console.log(text);
+          try {
+            onLoad(scope.parse(text));
+          } catch (e) {
+            if (onError) {
+              onError(e);
+            } else {
+              console.error(e);
+            }
 
-          scope.manager.itemError(url);
-        }
-      },
-      onProgress,
-      onError
-    );
+            scope.manager.itemError(url);
+          }
+        },
+        onProgress,
+        onError
+      );
+    } else {
+        data45 = url;
+url.getFile().then(function (file) {
+    console.log(file);
+       var reader = new FileReader();
+      reader.onload = function (e) {
+        var result = reader.result;
+
+        // parse using your corresponding loader
+          try {
+          console.log(result, "here");
+              onLoad(scope.parse(result));
+          } catch (e) {
+          }
+          
+      };
+
+
+      // read the file as text using the reader
+      reader.readAsText(file, 'UTF-8');
+});
+    }
   },
 
   parse: function (text) {
