@@ -20,10 +20,10 @@ var data45
       var hash = window.location.hash.replace("#", "");
       var args = hash.split(",");
       var fbxfile = args[0] || "xbot.fbx";
-      // var bvhfile = args[1] || "bvh/test.bvh";
-      var bvhfile =
-        args[1] ||
-        "https://cdn.jsdelivr.net/gh/miver-player/bvh-files@latest/02/02_09.bvh";
+       var bvhfile = args[1] || "bvh/test.bvh";
+     // var bvhfile =
+     //   args[1] ||
+     //   "https://cdn.jsdelivr.net/gh/miver-player/bvh-files@latest/02/02_09.bvh";
       var zoomLevel = args[2] || null;
       if (zoomLevel) {
         zoomLevel = parseFloat(zoomLevel);
@@ -646,7 +646,7 @@ var data45
           const loader_bvh = new BVHLoader();
           console.log(inputFile);
           loader_bvh.load(inputFile || bvhfile, function (result) {
-            console.log(result)
+            //console.log(result)
             bvhObj = result;
             animationDuration = result.clip.duration;
 
@@ -732,7 +732,7 @@ var data45
                 stats.update();
             }
             scene_bvh.traverse(function (child) {
-              // console.log(child);
+              //console.log(child);
               child.name = transposeName(child.name);
               if (child.type === "Bone") {
                 if (child.name === "LeftArm") {
@@ -821,7 +821,183 @@ var data45
                   var q = child.quaternion;
                   var bn = model.getObjectByName("mixamorigSpine");
                   bn.quaternion.set(q.x, q.y, q.z, q.w);
-                } else {
+                }
+                else if(child.name === "Spine1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigSpine1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "Spine2") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigSpine2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "Spine3") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigSpine3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                //fingers
+                else if(child.name === "LeftHandThumb1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandThumb2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandThumb3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandIndex1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandIndex2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandIndex3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandMiddle1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandMiddle2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandMiddle3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandRing1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandRing2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandRing3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+
+                else if(child.name === "LeftHandPinky1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandPinky2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "LeftHandPinky3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+
+
+
+
+
+                else if(child.name === "RightHandThumb1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandThumb2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandThumb3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandThumb3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandIndex1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandIndex2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandIndex3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandIndex3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandMiddle1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandMiddle2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandMiddle3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandMiddle3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandRing1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandRing2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandRing3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandRing3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+
+                else if(child.name === "RightHandPinky1") {
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky1");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandPinky2"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky2");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+                else if(child.name === "RightHandPinky3"){
+                  var q = child.quaternion;
+                  var bn = model.getObjectByName("mixamorigLeftHandPinky3");
+                  bn.quaternion.set(q.x, q.y, q.z, q.w);
+                }
+
+                
+                else {
                   // console.log(child);
                 }
               }
@@ -837,48 +1013,55 @@ var data45
       }
 
       function transposeName(name) {
-        if (name === "hip") name = "Hips";
-        if (name === "abdomen") name = "Spine1";
-        if (name === "chest") name = "Chest";
-        if (name === "neck") name = "Neck";
-        if (name === "head") name = "Head";
-        if (name === "lCollar") name = "LeftCollar";
-        if (name === "rCollar") name = "RightCollar";
-        if (name === "lShldr") name = "LeftArm";
-        if (name === "rShldr") name = "RightArm";
-        if (name === "lForeArm") name = "LeftForeArm";
-        if (name === "rForeArm") name = "RightForeArm";
-        if (name === "lHand") name = "LeftHand";
-        if (name === "rHand") name = "RightHand";
-        if (name === "lFoot") name = "LeftFoot";
-        if (name === "rFoot") name = "RightFoot";
-        if (name === "lThigh") name = "LeftUpLeg";
-        if (name === "rThigh") name = "RightUpLeg";
-        if (name === "lShin") name = "RightLeg";
-        if (name === "rShin") name = "LeftLeg";
+        var x = name.split(":");
+        if (x.length > 1) {
+          name = x[1];
+        }
+        //name = name.toLowerCase();
+               // console.log(name);
+
+        if (name.indexOf("hip")>-1) name = "Hips";
+        if (name.indexOf("abdomen")>-1) name = "Spine1";
+        if (name.indexOf("chest")>-1) name = "Chest";
+        if (name.indexOf("neck")>-1) name = "Neck";
+        if (name.indexOf("head")>-1) name = "Head";
+        if (name.indexOf("lcollar")>-1) name = "LeftCollar";
+        if (name.indexOf("rcollar")>-1) name = "RightCollar";
+        if (name.indexOf("lshldr")>-1) name = "LeftArm";
+        if (name.indexOf("rshldr")>-1) name = "RightArm";
+        if (name.indexOf("lforearm")>-1) name = "LeftForeArm";
+        if (name.indexOf("rforearm")>-1) name = "RightForeArm";
+        if (name.indexOf("lhand")>-1) name = "LeftHand";
+        if (name.indexOf("rhand")>-1) name = "RightHand";
+        if (name.indexOf("lfoot")>-1) name = "LeftFoot";
+        if (name.indexOf("rfoot")>-1) name = "RightFoot";
+        if (name.indexOf("lthigh")>-1) name = "LeftUpLeg";
+        if (name.indexOf("rthigh")>-1) name = "RightUpLeg";
+        if (name.indexOf("lshin")>-1) name = "RightLeg";
+        if (name.indexOf("rshin")>-1) name = "LeftLeg";
 
         // leg
-        if (name === "RightHip") name = "RightUpLeg";
-        if (name === "LeftHip") name = "LeftUpLeg";
-        if (name === "RightKnee") name = "RightLeg";
-        if (name === "LeftKnee") name = "LeftLeg";
-        if (name === "RightAnkle") name = "RightFoot";
-        if (name === "LeftAnkle") name = "LeftFoot";
+        if (name.indexOf("righthip")>-1) name = "RightUpLeg";
+        if (name.indexOf("lefthip")>-1) name = "LeftUpLeg";
+        if (name.indexOf("rightknee")>-1) name = "RightLeg";
+        if (name.indexOf("leftknee")>-1) name = "LeftLeg";
+        if (name.indexOf("rightankle")>-1) name = "RightFoot";
+        if (name.indexOf("leftankle")>-1) name = "LeftFoot";
         // arm
-        if (name === "RightShoulder") name = "RightArm";
-        if (name === "LeftShoulder") name = "LeftArm";
-        if (name === "RightElbow") name = "RightForeArm";
-        if (name === "LeftElbow") name = "LeftForeArm";
-        if (name === "RightWrist") name = "RightHand";
-        if (name === "LeftWrist") name = "LeftHand";
+        if (name.indexOf("rightshoulder")>-1) name = "RightArm";
+        if (name.indexOf("leftshoulder")>-1) name = "LeftArm";
+        if (name.indexOf("rightelbow")>-1) name = "RightForeArm";
+        if (name.indexOf("leftelbow")>-1) name = "LeftForeArm";
+        if (name.indexOf("rightwrist")>-1) name = "RightHand";
+        if (name.indexOf("leftwrist")>-1) name = "LeftHand";
 
-        if (name === "rcollar") name = "RightCollar";
-        if (name === "lcollar") name = "LeftCollar";
+        if (name.indexOf("rcollar")>-1) name = "RightCollar";
+        if (name.indexOf("lcollar")>-1) name = "LeftCollar";
 
-        if (name === "rtoes") name = "RightToe";
-        if (name === "ltoes") name = "LeftToe";
+        if (name.indexOf("rtoes")>-1) name = "RightToe";
+        if (name.indexOf("ltoes")>-1) name = "LeftToe";
 
-        if (name === "upperback") name = "Spine1";
+        if (name.indexOf("upperback")>-1) name = "Spine1";
 
         return name;
       }

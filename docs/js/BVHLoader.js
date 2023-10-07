@@ -144,6 +144,8 @@ url.getFile().then(function (file) {
 
       if (bone.type === "ENDSITE") return;
 
+     // console.log(bone.name);
+
       // add keyframe
 
       var keyframe = {
